@@ -1,0 +1,47 @@
+﻿<div class="row">
+    <form method="post">
+        <div class="form-group">
+            <label class="col-form-label">Name</label>
+            <input id="name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Email</label>
+            <input id="email" class="form-control" type="email"/>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Password</label>
+            <input id="password" class="form-control"  type="password"/>
+        </div>
+        <div class="form-group">
+            <input value="Create" class="btn btn-primary" onclick="register()" />
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        function register() {
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var pasword = $("#password").val();
+            $.post('@Url.Action("RegisterProc", "User")', { name:name, email: email, password: pasword }, function (data) {
+                console.log(data);
+                if (data == null) {
+                    swal({
+                        title: "Error!",
+                        text: "Create Error!",
+                        icon: "error",
+                    });
+                }
+                else {
+                    swal({
+                        title: "Success!",
+                        text: "Created Success!",
+                        icon: "success",
+                    });
+                    window.location.href = '@Url.Action("Login", "User")';
+                }
+            })
+        }
+    </script>
+}

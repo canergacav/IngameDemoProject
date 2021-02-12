@@ -1,0 +1,22 @@
+﻿@model IngameDemo.Core.Models.Product
+
+<table class="table table-active">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Is Active</th>
+            <th scope="col">Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">@Model.Id</th>
+            <td>@Model.Name</td>
+            <td>@Model.Price</td>
+            <td>@Model.IsActive</td>
+            <td><img src="@Model.ImageUrl" style="height:60px !important" /></td>
+        </tr>
+    </tbody>
+</table>

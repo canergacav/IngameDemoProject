@@ -1,0 +1,65 @@
+﻿@model List<IngameDemo.Core.Models.Category>
+
+@section Scripts{
+    <script>
+        var categoryList = @Html.Raw(Json.Serialize(Model));
+        var productList;
+        console.log(categoryList);
+
+        $("#categoryList").dxTreeList({
+            dataSource: categoryList,
+            keyExpr: "id",
+            parentIdExpr:"parentCategoryId",
+            columns: [
+                {
+                    dataField: "id",
+                    width:75
+                }, {
+                    dataField:"name"
+                }, {
+                    dataField:"isActive"
+                },
+                {
+                    type: "buttons",
+                    buttons: [{
+                        text: "All Product",
+                        onClick: function (e) {
+                            setProductList(e.row.data.id);
+                        }
+                    }]
+                }],
+        });
+
+        function setProductList(categoryId) {
+            $.get('@Url.Action("GetProductByCategoryId","Category")', { categoryId: categoryId }, function (data) {
+                console.log(data);
+                $("#productList").dxDataGrid({
+                    dataSource: data,
+                    columns: [{
+                        dataField: "id",
+                        width: 75
+                    }, {
+                        dataField:"name"
+                        },
+                        {
+                            type: "buttons",
+                            buttons: [{
+                                text: "Detail",
+                                onClick: function (e) {
+                                    window.location.href = "ProductDetail/2";
+                                    //setProductList(e.row.data.id);
+                                }
+                            }]
+                        }]
+                });
+            });
+        }
+
+
+    </script>
+}
+
+<div id="categoryList"></div>
+<div id="productList"></div>
+
+@*parentCategoryId*@

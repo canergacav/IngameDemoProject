@@ -1,0 +1,42 @@
+﻿<div class="row">
+    <form method="post">
+        <div class="form-group">
+            <label class="col-form-label">Email</label>
+            <input id="email" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label class="col-form-label">Password</label>
+            <input id="password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input value="Login" class="btn btn-primary" onclick="login()" />
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        function login() {
+            var email = $("#email").val();
+            var pasword = $("#password").val();
+            $.post('@Url.Action("LoginProc", "User")', { email: email, password: pasword }, function (data) {
+                console.log(data);
+                if (data == null) {
+                    swal({
+                        title: "Error!",
+                        text: "Email/Password Incorrect!",
+                        icon: "error",
+                    });
+                }
+                else {
+                    swal({
+                        title: "Success!",
+                        text: "Login Success!",
+                        icon: "success",
+                    });
+                    window.location.href = '@Url.Action("List", "Category")';
+                }
+            })
+        }
+    </script>
+}
